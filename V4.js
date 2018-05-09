@@ -1,7 +1,7 @@
-//requirements:
-// todoList.addToDo should add objects
-// todoList.changeTodo should change the todo Text property
-// todoList.toggleCompleted should change the completed property
+//Requirements:
+// - todoList.addToDo should add objects
+// - todoList.changeTodo should change the todo Text property
+// - todoList.toggleCompleted should change the completed property
 
 
 var todoList = {
