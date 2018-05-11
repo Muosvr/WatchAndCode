@@ -1,45 +1,42 @@
 
 var todoList = {
   todos: [],
-  displayTodos: function() {
+  // displayTodos: function() {
     
-    if (this.todos.length === 0){
-      console.log("Todo list is empty");
-    }else {
-      for (i = 0; i<this.todos.length; i++){
-        if(this.todos[i].completed === true){
-          console.log("(X)",this.todos[i].todoText);
-        }else {
-          console.log("( )",this.todos[i].todoText);
-        }
+  //   if (this.todos.length === 0){
+  //     console.log("Todo list is empty");
+  //   }else {
+  //     for (i = 0; i<this.todos.length; i++){
+  //       if(this.todos[i].completed === true){
+  //         console.log("(X)",this.todos[i].todoText);
+  //       }else {
+  //         console.log("( )",this.todos[i].todoText);
+  //       }
         
         
-      }
-    }
-  },
+  //     }
+  //   }
+  // },
   
   addTodo: function(todoText) {
     this.todos.push({
       todoText:todoText,
       completed:false
     });
-    this.displayTodos();
   },
   
   changeTodo: function(position, newTodoText) {
     this.todos[position].todoText = newTodoText;
-    this.displayTodos();
   },
   
   deleteTodo: function(position) {
     this.todos.splice(position, 1);
-    this.displayTodos();
+
   },
   
   toggleCompleted: function(position) {
     var todo = this.todos[position];
     todo.completed = !todo.completed;
-    this.displayTodos();
   },
   
   //V6
@@ -64,8 +61,6 @@ var todoList = {
         this.todos[i].completed = true;
       }
     }
-
-    this.displayTodos();
   }
   
 }
@@ -91,16 +86,15 @@ var todoList = {
 
 //refactoring-restruction existing element for easier reading and less code without changing functionality
 var handler = {
-  displayTodos: function(){
-    todoList.displayTodos();
-  },
   toggleAll:function(){
     todoList.toggleAll();
+    viewTodo.displayTodos();
   },
   addTodo: function(){
     var text = document.getElementById('inputText');
     todoList.addTodo(text.value);
     text.value = '';
+    viewTodo.displayTodos();
   },
   changeTodo: function(){
     var position = document.getElementById('changeTodoPosition');
@@ -108,21 +102,47 @@ var handler = {
     todoList.changeTodo(position.valueAsNumber,text.value);
     position.value = '';
     text.value = '';
+    viewTodo.displayTodos();
   },
   //button for deleting todos
   deleteTodo: function(){
     var deleteTodoPositionInput = document.getElementById('deleteTodoPositionInput');
     todoList.deleteTodo(deleteTodoPositionInput.valueAsNumber);
     deleteTodoPositionInput.value = '';
+    viewTodo.displayTodos();
   },
   //button for toggle todos
   toggleTodo: function(){
     var toggleTodoPositionInput = document.getElementById('toggleTodoPositionInput');
     todoList.toggleCompleted(toggleTodoPositionInput.valueAsNumber);
     toggleTodoPositionInput.value = '';
-    
+    viewTodo.displayTodos();
   }
 }
+
+var viewTodo = {
+  displayTodos: function(){
+    var todoListUl = document.querySelector('ul');
+    var displayTodosWithCompletion = '';
+    todoListUl.innerHTML = '';
+    
+    for (i=0; i<todoList.todos.length;i++){
+      var todoListLi = document.createElement('li');
+      var todoItemObj = todoList.todos[i];
+      
+      if (todoItemObj.completed === true){
+        displayTodosWithCompletion = '(x) '+todoItemObj.todoText;
+      }else{
+        displayTodosWithCompletion = '( ) '+todoItemObj.todoText;
+      }
+      
+      todoListLi.textContent = displayTodosWithCompletion;
+      todoListUl.appendChild(todoListLi);
+    }
+  }
+}
+
+
 
 
 
