@@ -16,7 +16,6 @@ var todoList = {
         
       }
     }
-    console.log("My Todos", this.todos);
   },
   
   addTodo: function(todoText) {
@@ -38,7 +37,6 @@ var todoList = {
   },
   
   toggleCompleted: function(position) {
-    debugger;
     var todo = this.todos[position];
     todo.completed = !todo.completed;
     this.displayTodos();
@@ -78,17 +76,40 @@ var todoList = {
   //Clicking "Display todos" should run todoList.displayTodos.
   //Clicking "Toggle all" should run todoList.toggleAll.
   
-  var displayTodosButton = document.getElementById("DisplayTodoButton");
-  var toggleAllButton = document.getElementById("ToggleAllButton");
-  displayTodosButton.addEventListener('click', function(){
-    todoList.displayTodos();
-  });
-  toggleAllButton.addEventListener('click', function(){
-    todoList.toggleAll();
-  })
+  // var displayTodosButton = document.getElementById("DisplayTodoButton");
+  // var toggleAllButton = document.getElementById("ToggleAllButton");
+  // displayTodosButton.addEventListener('click', function(){
+  //   todoList.displayTodos();
+  // });
+  
+  // toggleAllButton.addEventListener('click', function(){
+  //   todoList.toggleAll();
+  // })
 
 //->Use the debugger all the time
 
+
+//refactoring-restruction existing element for easier reading and less code without changing functionality
+var handler = {
+  displayTodos: function(){
+    todoList.displayTodos();
+  },
+  toggleAll:function(){
+    todoList.toggleAll();
+  },
+  addTodo: function(){
+    var text = document.getElementById('inputText');
+    todoList.addTodo(text.value);
+    text.value = '';
+  },
+  changeTodo: function(){
+    var position = document.getElementById('changeTodoPosition');
+    var text = document.getElementById('changeTodoText');
+    todoList.changeTodo(position.valueAsNumber,text.value);
+    position.value = '';
+    text.value = '';
+  }
+}
 
 
 
