@@ -108,6 +108,8 @@ var handler = {
     todoList.changeTodo(position.valueAsNumber,text.value);
     position.value = '';
     text.value = '';
+    
+    //button for deleting todos
   }
 }
 
