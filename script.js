@@ -108,8 +108,19 @@ var handler = {
     todoList.changeTodo(position.valueAsNumber,text.value);
     position.value = '';
     text.value = '';
+  },
+  //button for deleting todos
+  deleteTodo: function(){
+    var deleteTodoPositionInput = document.getElementById('deleteTodoPositionInput');
+    todoList.deleteTodo(deleteTodoPositionInput.valueAsNumber);
+    deleteTodoPositionInput.value = '';
+  },
+  //button for toggle todos
+  toggleTodo: function(){
+    var toggleTodoPositionInput = document.getElementById('toggleTodoPositionInput');
+    todoList.toggleCompleted(toggleTodoPositionInput.valueAsNumber);
+    toggleTodoPositionInput.value = '';
     
-    //button for deleting todos
   }
 }
 
