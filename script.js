@@ -105,10 +105,8 @@ var handler = {
     viewTodo.displayTodos();
   },
   //button for deleting todos
-  deleteTodo: function(){
-    var deleteTodoPositionInput = document.getElementById('deleteTodoPositionInput');
-    todoList.deleteTodo(deleteTodoPositionInput.valueAsNumber);
-    deleteTodoPositionInput.value = '';
+  deleteTodo: function(position){
+    todoList.deleteTodo(position);
     viewTodo.displayTodos();
   },
   //button for toggle todos
@@ -124,6 +122,7 @@ var viewTodo = {
   displayTodos: function(){
     var todoListUl = document.querySelector('ul');
     var displayTodosWithCompletion = '';
+    
     todoListUl.innerHTML = '';
     
     for (i=0; i<todoList.todos.length;i++){
@@ -138,10 +137,30 @@ var viewTodo = {
       
       todoListLi.textContent = displayTodosWithCompletion;
       todoListUl.appendChild(todoListLi);
+      todoListLi.id = i;
+      todoListLi.appendChild(this.createDeleteButton());
+      
+      
     }
-  }
+  },
+  
+  // v10
+  createDeleteButton: function(){
+        var deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.className = 'deleteButton';
+        return deleteButton;
+      }
 }
 
+var todoUl = document.querySelector('ul');
+  todoUl.addEventListener('click',function(event){
+  if (event.target.className == 'deleteButton'){
+  handler.deleteTodo(event.target.parentNode.id);
+  }
+  
+  
+})
 
 
 
