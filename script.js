@@ -25,50 +25,44 @@ var todoList = {
   
   //V6
   toggleAll: function() {
-    //if everything is complete, toggle them to uncompleted
+    
     var totalTodos = this.todos.length;
     var totalCompleted = 0;
 
-    for (i=0;i<totalTodos; i++){
-      if (this.todos[i].completed === true){
+    // for (i=0;i<totalTodos; i++){
+    //   if (this.todos[i].completed === true){
+    //     totalCompleted += 1;
+    //   }
+    // }
+    
+    this.todos.forEach(function(todo){
+      if (todo.completed === true){
         totalCompleted += 1;
       }
-    }
+    });
     
+    //if everything is complete, toggle them to uncompleted
     if(totalCompleted === totalTodos){
-      for(i=0; i<totalTodos; i++){
-        this.todos[i].completed = false;
-      }
+      // for(i=0; i<totalTodos; i++){
+      //   this.todos[i].completed = false;
+      // }
+      this.todos.forEach(function(todo){
+        todo.completed = false;
+      });
+      
     }else {
-      for(i=0; i<totalTodos; i++){
-        
-        this.todos[i].completed = true;
-      }
+      // for(i=0; i<totalTodos; i++){
+      //   this.todos[i].completed = true;
+      // }
+      
+      this.todos.forEach(function(todo){
+        todo.completed = true;
+      });
     }
   }
   
-}
+};
 
-  //V7
-  //There should be a "Display todos" button and a "Toggle all" button
-  //in the app
-  //Clicking "Display todos" should run todoList.displayTodos.
-  //Clicking "Toggle all" should run todoList.toggleAll.
-  
-  // var displayTodosButton = document.getElementById("DisplayTodoButton");
-  // var toggleAllButton = document.getElementById("ToggleAllButton");
-  // displayTodosButton.addEventListener('click', function(){
-  //   todoList.displayTodos();
-  // });
-  
-  // toggleAllButton.addEventListener('click', function(){
-  //   todoList.toggleAll();
-  // })
-
-//->Use the debugger all the time
-
-
-//refactoring-restruction existing element for easier reading and less code without changing functionality
 var handler = {
   toggleAll:function(){
     todoList.toggleAll();
@@ -106,29 +100,44 @@ var viewTodo = {
   displayTodos: function(){
     var todoListUl = document.querySelector('ul');
     var displayTodosWithCompletion = '';
+    var i = 0;
     
     todoListUl.innerHTML = '';
     
-    for (i=0; i<todoList.todos.length;i++){
-      var todoListLi = document.createElement('li');
-      var todoItemObj = todoList.todos[i];
+    // for (i=0; i<todoList.todos.length;i++){
       
-      if (todoItemObj.completed === true){
-        displayTodosWithCompletion = '(x) '+todoItemObj.todoText;
+    //   var todoListLi = document.createElement('li');
+    //   var todoItemObj = todoList.todos[i];
+      
+    //   if (todoItemObj.completed === true){
+    //     displayTodosWithCompletion = '(x) '+todoItemObj.todoText;
+    //   }else{
+    //     displayTodosWithCompletion = '( ) '+todoItemObj.todoText;
+    //   }
+      
+    //   todoListLi.textContent = displayTodosWithCompletion;
+    //   todoListUl.appendChild(todoListLi);
+    //   todoListLi.id = i;
+    //   todoListLi.appendChild(this.createDeleteButton());
+    // }
+    
+    todoList.todos.forEach(function(todo){
+      var todoListLi = document.createElement('li');
+      
+      if(todo.completed === true){
+        displayTodosWithCompletion = '(x) '+todo.todoText;
       }else{
-        displayTodosWithCompletion = '( ) '+todoItemObj.todoText;
+        displayTodosWithCompletion = '( ) '+todo.todoText;
       }
       
       todoListLi.textContent = displayTodosWithCompletion;
       todoListUl.appendChild(todoListLi);
       todoListLi.id = i;
+      i++;
       todoListLi.appendChild(this.createDeleteButton());
-      
-      
-    }
+    }, this);
   },
   
-  // v10
   createDeleteButton: function(){
         var deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
